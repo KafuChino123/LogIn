@@ -2,7 +2,7 @@
 //  UsersData.swift
 //  LogIn
 //
-//  Created by Raspberry on 2024/4/26.
+//  Created by 马硕 on 2024/4/26.
 //
 
 import Foundation
@@ -27,7 +27,7 @@ func deleteUserData() {
 }
 
 func postUserData(_ email: String, _ password: String) {
-    guard let url = URL(string: "http://120.26.205.81:9000") else { return } // http://120.26.205.81:9000 /application/x-www-form-urlencoded
+    guard let url = URL(string: "http://120.26.205.81:9000/login") else { return } // http://120.26.205.81:9000 /application/x-www-form-urlencoded
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
     
@@ -35,8 +35,15 @@ func postUserData(_ email: String, _ password: String) {
     request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
     
     //设置请求体
-    let parameters: [String: Any] = ["user_name": email, "user_password": password]
-    request.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
+//    let parameters: [String: Any] = ["user_name": email, "user_password": password]
+//    request.httpBody = try? JSONSerialization.data(withJSONObject: parameters)
+    
+    let parameters: [String: String] = ["user_name": email, "user_password": password]
+    let parameterArray = parameters.map { (key, value) -> String in
+        return "\(key)=\(value)"
+    }
+    let parameterString = parameterArray.joined(separator: "&")
+    request.httpBody = parameterString.data(using: .utf8)
     
     let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
         if let error = error {
