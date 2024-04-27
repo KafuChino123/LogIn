@@ -1,4 +1,3 @@
-<img width="1920" alt="image" src="https://github.com/KafuChino123/LogIn/assets/118886923/18e59414-81a6-4876-a1b7-0cc39ea78200"># LogIn
 使用SwiftUI对一个登录页面进行UI复原。
 
 ## 功能实现:
